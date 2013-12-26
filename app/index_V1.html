@@ -1,0 +1,218 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/bootstrap.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+</head>
+  <body ng-app="trailerFanApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="container" ng-view=""></div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+
+        <!-- build:js scripts/plugins.js -->
+        
+        <!-- <script src="bower_components/sass-bootstrap/js/affix.js"></script>
+        <script src="bower_components/sass-bootstrap/js/alert.js"></script>
+        <script src="bower_components/sass-bootstrap/js/button.js"></script>
+        <script src="bower_components/sass-bootstrap/js/carousel.js"></script>
+        <script src="bower_components/sass-bootstrap/js/transition.js"></script>
+        <script src="bower_components/sass-bootstrap/js/collapse.js"></script> -->
+        
+        <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
+        <script src="bower_components/sass-bootstrap/js/modal.js"></script>
+
+        <!-- <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tab.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
+        <script src="bower_components/sass-bootstrap/js/popover.js"></script>-->
+        <!-- endbuild -->
+
+        <!-- build:js scripts/modules.js -->
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <!-- endbuild -->
+
+        <!-- sublimevideo.net -->
+        <script type="text/javascript" src="http://cdn.sublimevideo.net/js/2grw48lp.js"></script>
+        <!-- sublimevideo.net -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <!-- endbuild -->
+
+        
+        <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Mango Man</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#/All">All</a></li>
+                <li><a href="#/English">English</a></li>
+                <li><a href="#/Hindi">Hindi</a></li>
+                <li><a href="#/Telugu">Telugu</a></li>
+                <li><a href="#/Tamil">Tamil</a></li>
+              </ul>
+            </div><!-- /.nav-collapse -->
+          </div><!-- /.container -->
+        </div><!-- /.navbar -->
+      <div class="row top-buffer"></div>
+      <div class="row top-buffer"></div>
+      <div class="row top-buffer"></div>
+      <div class="row top-buffer"></div>
+      <form action="" ng-controller="PlayerCtrl">
+        <div class="container">
+          <div class="row">
+            <div class="row">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-10">
+                <div class="btn-group btn-block">
+                    <button class="btn btn-lg btn-primary dropdown-lead">
+                      <i class="glyphicon glyphicon-film"></i>  Play All Trailers
+                    </button>
+                  <button class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu btn-block" role="menu">
+                    <li><a href="#"><i class="glyphicon glyphicon-film"></i>  Play All English Trailers</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-film"></i>  Play All Hindi Trailers</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-film"></i>  Play All Telugu Trailers</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-film"></i>  Play All Tamil Trailers</a></li>
+                  </ul>
+                </div>
+                <div class="row top-buffer">
+                 
+                </div>
+                <div class="btn-group pull-right" ng-hide="!languageFilter.lang==''" ng-init="languageFilter.lang=''">
+                      <button class="btn btn-xs btn-primary">
+                        <i class="glyphicon glyphicon-filter"></i> Filter
+                      </button>
+                    <button class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" ng-click="languageFilter.lang='English'"><i class="glyphicon glyphicon-film"></i> English Only</a></li>
+                      <li><a href="#" ng-click="languageFilter.lang='Hindi'"><i class="glyphicon glyphicon-film"></i> Hindi Only</a></li>
+                      <li><a href="#" ng-click="languageFilter.lang='Telugu'"><i class="glyphicon glyphicon-film"></i> Telugu Only</a></li>
+                      <li><a href="#" ng-click="languageFilter.lang='Tamil'"><i class="glyphicon glyphicon-film"></i> Tamil Only</a></li>
+                    </ul>
+                </div>
+                <div>
+                  <button class="btn btn-xs btn-warning pull-right" ng-click="languageFilter.lang=''" ng-hide="languageFilter.lang==''">
+                    <i class="glyphicon glyphicon-remove"></i> {{languageFilter.lang}} Only
+                  </button>
+                </div>
+                <div class="btn-group pull-right">
+                      <button class="btn btn-xs btn-primary">
+                        <i class="glyphicon glyphicon-sort"></i> Sort
+                      </button>
+                    <button class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Newest First</a></li>
+                      <li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Oldest First</a></li>
+                      <li><a href="#"><i class="glyphicon glyphicon-sort-by-alphabet"></i> Alpha Ascending</a></li>
+                      <li><a href="#"><i class="glyphicon glyphicon-sort-by-alphabet-alt"></i> Alpha Descending</a></li>
+                    </ul>
+                </div>
+              </div>
+              <div class="col-md-1">
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="row top-buffer"></div>
+
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+              <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="video in videos | filter:languageFilter">
+                <div class="row top-buffer"/>
+                  <div style='position: relative;'>
+                    <div class='fader'>
+                      <a href="#" ng-click="openVideo('tfVideo{{$index}}','tfModal{{$index}}');">
+                        <img width='{{video.width}}' height='{{video.height}}' alt='{{video.title}}' style='position: relative; z-index: 1;' src='{{video.imgSrc}}'/>
+                        <img src='images/play.png' style='position: absolute;left:40%; top:40%;z-index: 10;'/>
+                      </a>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="tfModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-center">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <blockquote>
+                                    <h4 class="modal-title" id="myModalLabel">{{video.title}}</h4>
+                                </blockquote>
+                              </div>
+                              <div class="modal-body">
+                                <tf-sl-video vId="tfVideo{{$index}}" width='{{video.width}}' height='{{video.height}}' title='{{video.title}}' ytId='{{video.ytId}}'/>
+                              </div>
+                              <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button> -->
+                              </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                      </div><!-- /.modal -->
+
+                    </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+          </div>
+      </div>
+</body>
+</html>
