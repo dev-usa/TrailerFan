@@ -188,11 +188,11 @@
           <div class='col-md-4 col-sm-6 col-xs-12' ng-repeat="video in videos | filter:languageFilter"> 
             <div class='row top-buffer'> </div> 
               <div style='position:relative;'> 
-                <div class='fader'> 
+                <div> 
                   <a href='#' ng-click='playVideo(video)'> 
                     <img width='{{video.width}}' height='{{video.height}}' alt='{{video.title}}' style='position: relative; z-index: 1;' src='{{video.imgSrc}}'/> 
-                    <img src='images/play.png' style='position: absolute;left:40%; top:40%;z-index: 10;'/> 
-                  </a> 
+                    <img src='images/play-yellow.png' style='position: absolute;left:40%; top:40%;z-index: 10;display:none' display-on-hover/> 
+                  </a>
                 </div> 
               </div>
           </div>

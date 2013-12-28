@@ -59,6 +59,17 @@ myApp.directive("trailerList", function(){
   }
 });
 
+myApp.directive("displayOnHover", function(){
+  return function(scope,element,attrs){
+    element.parent().bind('mouseenter',function(){
+      element.show();
+    });
+    element.parent().bind('mouseleave',function(){
+      element.hide();
+    });
+  }
+});
+
 myApp.directive("userDataRefresh", function(){
   return function (scope, element, attrs){
     scope.$watch("showModal",  function(newValue, oldValue){
