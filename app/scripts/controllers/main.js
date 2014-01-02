@@ -1,63 +1,69 @@
 'use strict';
 
-var myApp = angular.module("trailerFanApp", []);
+var myApp = angular.module("trailerFanApp", ['ui.bootstrap']);
 
 myApp.controller("PlayerCtrl",
-  function PlayerCtrl($scope,$log,$sce,trailers)
-  {
+  function PlayerCtrl($scope,$log,$sce,$modal,$timeout,trailers){
+
      $scope.videos = trailers;
 
      $scope.selectedVideo = {
-        ytId: "",
-        imgSrc:"",
+        ytId: "6kw1UVovByw",
+        imgSrc:"http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width:"320",
         height:"300",
-        title:"",
-        lang: "",
-        relDate: "",
-        rating: ""
+        title:"My Custom Title 1",
+        lang: "English",
+        relDate: "2013/17/11",
+        rating: "3.5"
       };
 
-     $scope.showModal = false;
-
      $scope.playVideo = function(video){
-        //console.log("the glorious string==> " + JSON.stringify(video));
 
-        $scope.showModal = true;
-        $scope.selectedVideo = video;
+        var modalInstance = $modal.open({
+          templateUrl: 'myModalContent.html',
+          controller: ModalInstanceCtrl,
+          resolve: {
+            selectedVideo: function () {
+               return video;
+            }
+          }
+        });
 
-        //$scope.initPlayer = false;
+        var myPlayer;
+        modalInstance.opened.then(function(){
+          $timeout(function(){
+            console.log('timeout complete');
+              myPlayer = videojs('tfVideo', { "techOrder": ["youtube"], "src": "http://www.youtube.com/watch?v="+video.ytId, "quality": "1080p"}).ready(function() {
+              this.play();
+              // Cue a video using ended event
+              // this.one('ended', function() {
+              //   console.log('next video playing...');
+              //   this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
+              // });
+            });
+          }, 100);
+        });
+
+        modalInstance.result.then(function(){},function () {
+          // console.log('Modal dismissed at: ' + new Date());
+          console.log("Disposing Video...");
+          myPlayer.dispose();
+        });
+
      };
-    
-    $scope.closeVideo = function(video){
-        $scope.showModal = false;
-     };
+   });
 
-  }
-);
+var ModalInstanceCtrl = function ($scope, $modalInstance, selectedVideo) {
 
-myApp.directive("trailerList", function(){
-  var htmlTemplate = "<div class='col-md-4 col-sm-6 col-xs-12'>" +
-    " <div class='row top-buffer'>" +
-    " </div>" +
-    "<div style='position:relative;'>" +
-    "  <div class='fader'>" +
-    "    <a href='#' ng-click='playVideo(video)'>" +
-    "      <img width='{{video.width}}' height='{{video.height}}' alt='{{video.title}}' style='position: relative; z-index: 1;' src='{{video.imgSrc}}'/>" +
-    "      <img src='images/play.png' style='position: absolute;left:40%; top:40%;z-index: 10;'/>" +
-    "    </a>" +
-    "  </div>" +
-    "</div>";
+  $scope.selectedVideo = selectedVideo;
 
-  return {
-    restrct: 'AE',
-    scope: {
-      video : "=",
-      playVideo : "&"
-    },
-    template: htmlTemplate
-  }
-});
+  $scope.dismissModal = function () {
+    //console.log('dismissModal()... dismissing');
+    $modalInstance.dismiss('dismissModal');
+    //console.log('dismissModal()... done');
+  };
+};
 
 myApp.directive("displayOnHover", function(){
   return function(scope,element,attrs){
@@ -70,53 +76,12 @@ myApp.directive("displayOnHover", function(){
   }
 });
 
-myApp.directive("userDataRefresh", function(){
-  return function (scope, element, attrs){
-    scope.$watch("showModal",  function(newValue, oldValue){
-      console.log("userDataRefresh ==> showModal ==> OLD ==> " + oldValue);
-      console.log("userDataRefresh ==> showModal ==> NEW ==> " + newValue);
-
-      if(newValue == true)
-      {
-        //console.log("element ==> " + element);
-        $("#tfVideo").on("show.bs.modal", function() {
-          var height = $(window).height() - 200;
-          $(this).find(".modal-body").css("max-height", height);
-        });
-
-        $('#tfModal').on('shown.bs.modal', function (e) {
-
-          sublime.ready(function(){
-            console.log("sublime is ready... ");
-            console.log('preparing...');
-            sublime.prepare('tfVideo', function(player) {
-              console.log("playing video ... ");
-              player.play();
-            });
-          });
-        })
-
-        $('#tfModal').on('hidden.bs.modal', function (e) {
-          console.log('un preparing...');
-          sublime.unprepare('tfVideo');
-        })
-
-        $('#tfModal').modal({
-          backdrop:"static",
-          keyboard: false
-        });
-      }
-    }, true);
-  }
-});
-
-
 myApp.run(function(){
-  console.log("loading sublime ... ");
-  sublime.load();  
-  sublime.ready(function (){
-    console.log("done loading sublime ... ");
-  });
+  // console.log("loading sublime ... ");
+  // sublime.load();  
+  // sublime.ready(function (){
+  //   console.log("done loading sublime ... ");
+  // });
 });
 
 myApp.directive('a', function() {

@@ -52,10 +52,13 @@
   <script src="bower_components/sass-bootstrap/js/transition.js"></script>
   <script src="bower_components/sass-bootstrap/js/collapse.js"></script> -->
   
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+
+  <!-- 
   <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
   <script src="bower_components/sass-bootstrap/js/modal.js"></script>
-
-  <!-- <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
+  
+  <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
   <script src="bower_components/sass-bootstrap/js/tab.js"></script>
   <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
   <script src="bower_components/sass-bootstrap/js/popover.js"></script>-->
@@ -68,15 +71,19 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <!-- endbuild -->
 
-  <!-- sublimevideo.net -->
+  <!-- sublimevideo.net
   <script type="text/javascript" src="http://cdn.sublimevideo.net/js/2grw48lp.js"></script>
-  <!-- sublimevideo.net -->
+  sublimevideo.net -->
+
+  <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
+  <script src="//vjs.zencdn.net/4.2/video.js"></script>
+  <script src="bower_components/videojs-youtube/vjs.youtube.js"></script>
 
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <!-- endbuild -->
-        
+
   <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -184,47 +191,38 @@
           
         </div>
         <div class="col-md-10">
-          <!-- <div trailer-list video="video" play-video="playVideo(video)" ng-repeat="video in videos | filter:languageFilter"> </div> -->
           <div class='col-md-4 col-sm-6 col-xs-12' ng-repeat="video in videos | filter:languageFilter"> 
             <div class='row top-buffer'> </div> 
               <div style='position:relative;'> 
-                <div> 
-                  <a href='#' ng-click='playVideo(video)'> 
+                <div ng-click='playVideo(video)'> 
+                  <a href='#'> 
                     <img width='{{video.width}}' height='{{video.height}}' alt='{{video.title}}' style='position: relative; z-index: 1;' src='{{video.imgSrc}}'/> 
-                    <img src='images/play-yellow.png' style='position: absolute;left:40%; top:40%;z-index: 10;display:none' display-on-hover/> 
+                    <img src='images/play-yellow.png' style='position: absolute;left:40%; top:40%;z-index: 10; display:none' display-on-hover/> 
                   </a>
                 </div> 
               </div>
           </div>
 
-              <div class='modal modal-wide fade' id='tfModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' height="500" width="800" user-data-refresh> 
-                <div class='modal-dialog modal-dialog-center'> 
-                  <div class='modal-content'> 
-                      <div class='modal-header'> 
-                        <button type='button' class="btn btn-xs btn-warning pull-right" data-dismiss='modal' aria-hidden='true' ng-click="closeVideo()"> 
-                          <i class="glyphicon glyphicon-remove-circle"></i> Close
-                        </button> 
-                        <blockquote> 
-                            <h4 class='modal-title' id='myModalLabel'>{{selectedVideo.title}}</h4>
-                        </blockquote> 
-                      </div> 
-                      <div class='modal-body'> 
-                        <video id='tfVideo' data-youtube-id="{{selectedVideo.ytId}}" height="450" width="670" title="{{selectedVideo.title}}" preload='none'></video> 
-                      </div> 
-                      <!-- <div class='modal-footer'> 
-                      </div>  -->
-                  </div><!-- /.modal-content --> 
-                </div><!-- /.modal-dialog --> 
-              </div><!-- /.modal -->
-
-          <!-- <div modal-layer video="selectedVideo" monitor-play-reqs></div> -->
+            <script type="text/ng-template" id="myModalContent.html">
+              <div class='modal-header' tabindex='-1'> 
+                <button type='button' class="btn btn-xs btn-warning pull-right" ng-click="dismissModal()"> 
+                  <i class="glyphicon glyphicon-remove-circle"></i> Close
+                </button> 
+                <blockquote> 
+                    <h4 class='modal-title' id='myModalLabel'>{{selectedVideo.title}}</h4>
+                </blockquote> 
+              </div> 
+              <div class='modal-body'>
+                <video id="tfVideo" src="" class="video-js vjs-default-skin" style="display:none" preload="auto" controls> </video>
+              </div> 
+            </script>
         </div>
         <div class="col-md-1">
          <!--  <modal-layer user-data-refresh user-video-refresh/> -->
-            </div>
         </div>
       </div>
-      </div>
+    </div>
+    </div>
   </form>
 </body>
 </html>
