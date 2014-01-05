@@ -4,65 +4,82 @@ var myApp = angular.module("trailerFanApp", ['ui.bootstrap']);
 
 myApp.controller("PlayerCtrl",
     function PlayerCtrl($scope, $log, $sce, $modal, $timeout, trailers) {
+
         $scope.videos = trailers;
-        $scope.playVideo = openModal(video);
-    });
 
-function(video){
-  var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
-      controller: ModalInstanceCtrl,
-      width: 100,
-      height: 700,
-      resolve: {
-              selectedVideo: function() {
-              
-              console.log("Setting the modal-body height...");
-              var height = $(window).height() - 200;
-              $(this).find(".modal-body").css("max-height", height);
-              console.log("Done setting the modal-body height...");
+        $scope.playVideo = function(video) {
 
-              return video;
-          }
-      }
-  });
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: ModalInstanceCtrl,
+                width: 100,
+                height: 700,
+                resolve: {
+                        selectedVideo: function() {
+                        
+                        console.log("Setting the modal-body height...");
+                        var height = $(window).height() - 200;
+                        $(this).find(".modal-body").css("max-height", height);
+                        console.log("Done setting the modal-body height...");
 
-  var myPlayer;
-  modalInstance.opened.then(function() {
-      $timeout(function() {
-          console.log('timeout complete');
-          myPlayer = videojs('tfVideo', {
-              plugins: {
-                persistVolume: {
-                  namespace: 'trailerFanApp'
+                        return video;
+                    }
                 }
-              },
-              "techOrder": ["youtube"],
-              "src": "http://www.youtube.com/watch?v=" + video.ytId,
-              "quality": "1080p"
-          }).ready(function() {
-              this.play();
-              // Cue a video using ended event
-              // this.one('ended', function() {
-              //   console.log('next video playing...');
-              //   this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
-              // });
-          });
-      }, 100);
-  });
+            });
 
-  modalInstance.result.then(function() {}, function() {
-      // console.log('Modal dismissed at: ' + new Date());
-      console.log("Disposing Video...");
-      myPlayer.dispose();
-  });
-}
+            var myPlayer;
+
+            modalInstance.opened.then(function() {
+
+
+                $timeout(function() {
+                    console.log('timeout complete');
+
+                    var aspectRatio = 1.78;
+                    var width =  $('#videoHolder').width();
+                    var height = width / aspectRatio;
+
+                    myPlayer = videojs('tfVideo', {
+                        plugins: {
+                          persistVolume: {
+                            namespace: 'trailerFanApp'
+                          }
+                        },
+                        "techOrder": ["youtube"],
+                        "src": "http://www.youtube.com/watch?v=" + video.ytId,
+                        "quality": "1080p",
+                        "width":width,
+                        "height":height
+                    }).ready(function() {
+
+                        //this.dimensions(width, height);
+                        this.play();
+
+                        // Cue a video using ended event
+                        // this.one('ended', function() {
+                        //   console.log('next video playing...');
+                        //   this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
+                        // });
+                    });
+                }, 100);
+            });
+
+            modalInstance.result.then(function() {}, function() {
+                // console.log('Modal dismissed at: ' + new Date());
+                console.log("Disposing Video...");
+                myPlayer.dispose();
+            });
+
+        };
+    });
 
 var ModalInstanceCtrl = function($scope, $modalInstance, selectedVideo) {
 
     $scope.selectedVideo = selectedVideo;
+
     $scope.dismissModal = function() {
         //console.log('dismissModal()... dismissing');
+        console.log("Width =====> " + $modalInstance.width);
         $modalInstance.dismiss('dismissModal');
         //console.log('dismissModal()... done');
     };
@@ -76,19 +93,6 @@ myApp.directive("displayOnHover", function() {
         element.parent().bind('mouseleave', function() {
             element.hide();
         });
-    }
-});
-
-myApp.directive("autoDimensions", function() {
-    return function(scope, element, attrs) {
-      // Make up an aspect ratio
-      var aspectRatio = 264/640; 
-
-      var width = element.parent().width();
-
-      element.width(width).height( width * aspectRatio );
-
-      console.log("width = " + width + ", height = " + width * aspectRatio);
     }
 });
 
