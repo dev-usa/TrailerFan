@@ -108,11 +108,11 @@ body {
 
 .fader img:hover {
   /* Making images appear bigger and transparent on mouseover */
-    opacity:0.85;
+  opacity:0.85;
 }
 
 .modal-dialog-center {
-    margin-top: 2%;
+  margin-top: 2%;
 }
 
 /* To Keep the body from moving right by 15px appxly when opening the modal*/
@@ -120,7 +120,7 @@ body {
 overflow: auto;
 }
 
-.modal.modal-wide .modal-dialog {
+.modal-dialog {
   width: 80%;
 }
 .modal-wide .modal-body {

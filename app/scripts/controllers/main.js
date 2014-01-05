@@ -4,53 +4,63 @@ var myApp = angular.module("trailerFanApp", ['ui.bootstrap']);
 
 myApp.controller("PlayerCtrl",
     function PlayerCtrl($scope, $log, $sce, $modal, $timeout, trailers) {
-
         $scope.videos = trailers;
-
-        $scope.playVideo = function(video) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'myModalContent.html',
-                controller: ModalInstanceCtrl,
-                resolve: {
-                    selectedVideo: function() {
-                        return video;
-                    }
-                }
-            });
-
-            var myPlayer;
-            modalInstance.opened.then(function() {
-                $timeout(function() {
-                    console.log('timeout complete');
-                    myPlayer = videojs('tfVideo', {
-                        "techOrder": ["youtube"],
-                        "src": "http://www.youtube.com/watch?v=" + video.ytId,
-                        "quality": "1080p"
-                    }).ready(function() {
-                        this.play();
-                        // Cue a video using ended event
-                        // this.one('ended', function() {
-                        //   console.log('next video playing...');
-                        //   this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
-                        // });
-                    });
-                }, 100);
-            });
-
-            modalInstance.result.then(function() {}, function() {
-                // console.log('Modal dismissed at: ' + new Date());
-                console.log("Disposing Video...");
-                myPlayer.dispose();
-            });
-
-        };
+        $scope.playVideo = openModal(video);
     });
+
+function(video){
+  var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      width: 100,
+      height: 700,
+      resolve: {
+              selectedVideo: function() {
+              
+              console.log("Setting the modal-body height...");
+              var height = $(window).height() - 200;
+              $(this).find(".modal-body").css("max-height", height);
+              console.log("Done setting the modal-body height...");
+
+              return video;
+          }
+      }
+  });
+
+  var myPlayer;
+  modalInstance.opened.then(function() {
+      $timeout(function() {
+          console.log('timeout complete');
+          myPlayer = videojs('tfVideo', {
+              plugins: {
+                persistVolume: {
+                  namespace: 'trailerFanApp'
+                }
+              },
+              "techOrder": ["youtube"],
+              "src": "http://www.youtube.com/watch?v=" + video.ytId,
+              "quality": "1080p"
+          }).ready(function() {
+              this.play();
+              // Cue a video using ended event
+              // this.one('ended', function() {
+              //   console.log('next video playing...');
+              //   this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
+              // });
+          });
+      }, 100);
+  });
+
+  modalInstance.result.then(function() {}, function() {
+      // console.log('Modal dismissed at: ' + new Date());
+      console.log("Disposing Video...");
+      myPlayer.dispose();
+  });
+}
 
 var ModalInstanceCtrl = function($scope, $modalInstance, selectedVideo) {
 
     $scope.selectedVideo = selectedVideo;
-
     $scope.dismissModal = function() {
         //console.log('dismissModal()... dismissing');
         $modalInstance.dismiss('dismissModal');
@@ -66,6 +76,19 @@ myApp.directive("displayOnHover", function() {
         element.parent().bind('mouseleave', function() {
             element.hide();
         });
+    }
+});
+
+myApp.directive("autoDimensions", function() {
+    return function(scope, element, attrs) {
+      // Make up an aspect ratio
+      var aspectRatio = 264/640; 
+
+      var width = element.parent().width();
+
+      element.width(width).height( width * aspectRatio );
+
+      console.log("width = " + width + ", height = " + width * aspectRatio);
     }
 });
 
@@ -95,6 +118,7 @@ myApp.directive('a', function() {
 
 myApp.factory('trailers', function() {
     var trailers = [{
+        tfVideoId: "1",
         ytId: "6kw1UVovByw",
         imgSrc: "http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width: "320",
@@ -104,6 +128,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "2",
         ytId: "uWgDVz4NEO4",
         imgSrc: "http://img.youtube.com/vi/uWgDVz4NEO4/0.jpg",
         width: "320",
@@ -113,6 +138,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "3",
         ytId: "ddAAjFJBeZM",
         imgSrc: "http://img.youtube.com/vi/ddAAjFJBeZM/0.jpg",
         width: "320",
@@ -122,6 +148,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "4",
         ytId: "mMMPdtN_qaQ",
         imgSrc: "http://img.youtube.com/vi/mMMPdtN_qaQ/0.jpg",
         width: "320",
@@ -131,6 +158,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "5",
         ytId: "6kw1UVovByw",
         imgSrc: "http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width: "320",
@@ -140,6 +168,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "6",
         ytId: "uWgDVz4NEO4",
         imgSrc: "http://img.youtube.com/vi/uWgDVz4NEO4/0.jpg",
         width: "320",
@@ -149,6 +178,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "7",
         ytId: "ddAAjFJBeZM",
         imgSrc: "http://img.youtube.com/vi/ddAAjFJBeZM/0.jpg",
         width: "320",
@@ -158,6 +188,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "8",
         ytId: "mMMPdtN_qaQ",
         imgSrc: "http://img.youtube.com/vi/mMMPdtN_qaQ/0.jpg",
         width: "320",
@@ -167,6 +198,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "9",
         ytId: "6kw1UVovByw",
         imgSrc: "http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width: "320",
@@ -176,6 +208,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "10",
         ytId: "uWgDVz4NEO4",
         imgSrc: "http://img.youtube.com/vi/uWgDVz4NEO4/0.jpg",
         width: "320",
@@ -185,6 +218,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "11",
         ytId: "ddAAjFJBeZM",
         imgSrc: "http://img.youtube.com/vi/ddAAjFJBeZM/0.jpg",
         width: "320",
@@ -194,6 +228,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "12",
         ytId: "mMMPdtN_qaQ",
         imgSrc: "http://img.youtube.com/vi/mMMPdtN_qaQ/0.jpg",
         width: "320",
@@ -203,6 +238,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "13",
         ytId: "6kw1UVovByw",
         imgSrc: "http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width: "320",
@@ -212,6 +248,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "14",
         ytId: "uWgDVz4NEO4",
         imgSrc: "http://img.youtube.com/vi/uWgDVz4NEO4/0.jpg",
         width: "320",
@@ -221,6 +258,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "15",
         ytId: "ddAAjFJBeZM",
         imgSrc: "http://img.youtube.com/vi/ddAAjFJBeZM/0.jpg",
         width: "320",
@@ -230,6 +268,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "16",
         ytId: "mMMPdtN_qaQ",
         imgSrc: "http://img.youtube.com/vi/mMMPdtN_qaQ/0.jpg",
         width: "320",
@@ -239,6 +278,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "17",
         ytId: "6kw1UVovByw",
         imgSrc: "http://img.youtube.com/vi/6kw1UVovByw/0.jpg",
         width: "320",
@@ -248,6 +288,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "18",
         ytId: "uWgDVz4NEO4",
         imgSrc: "http://img.youtube.com/vi/uWgDVz4NEO4/0.jpg",
         width: "320",
@@ -257,6 +298,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "19",
         ytId: "ddAAjFJBeZM",
         imgSrc: "http://img.youtube.com/vi/ddAAjFJBeZM/0.jpg",
         width: "320",
@@ -266,6 +308,7 @@ myApp.factory('trailers', function() {
         relDate: "2013/17/11",
         rating: "3.5"
     }, {
+        tfVideoId: "20",
         ytId: "mMMPdtN_qaQ",
         imgSrc: "http://img.youtube.com/vi/mMMPdtN_qaQ/0.jpg",
         width: "320",
